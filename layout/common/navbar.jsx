@@ -30,10 +30,17 @@ class Navbar extends Component {
 
         let navbarLogo = '';
         if (logo) {
-            if (logo.text) {
-                navbarLogo = logo.text;
+            const { text, url } = logo || {};
+            if (text) {
+                navbarLogo = (
+                    <>
+                        <img src={url} alt={siteTitle} height="28" />
+                        &nbsp;
+                        {logo.text}
+                    </>
+                );
             } else {
-                navbarLogo = <img src={logoUrl} alt={siteTitle} height="28" />;
+                navbarLogo = <img src={url} alt={siteTitle} height="28" />;
             }
         } else {
             navbarLogo = siteTitle;
@@ -50,7 +57,11 @@ class Navbar extends Component {
                     {Object.keys(menu).length ? <div class="navbar-start">
                         {Object.keys(menu).map(name => {
                             const item = menu[name];
-                            return <a class={classname({ 'navbar-item': true, 'is-active': item.active })} href={item.url}>{name}</a>;
+                            const { url, icon, active } = item;
+                            return <a class={classname({ 'navbar-item': true, 'is-active': active })} href={url}>
+                                {icon && <i class={classname({ 'nav-icon': true, [icon]: true })}></i>}
+                                {name}
+                            </a>;
                         })}
                     </div> : null}
                     <div class="navbar-end">
@@ -87,9 +98,11 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
     if (navbar && navbar.menu) {
         const pageUrl = typeof page.path !== 'undefined' ? url_for(page.path) : '';
         Object.keys(navbar.menu).forEach(name => {
-            const url = url_for(navbar.menu[name]);
+            const uriInfo = navbar.menu[name];
+            const { url: uri, icon } = typeof uriInfo === 'string' ? { url: uriInfo, icon: '' } : uriInfo;
+            const url = url_for(uri);
             const active = isSameLink(url, pageUrl);
-            menu[name] = { url, active };
+            menu[name] = { url, active, icon };
         });
     }
 

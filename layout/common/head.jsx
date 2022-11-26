@@ -46,7 +46,8 @@ module.exports = class extends Component {
             structured_data = {},
             canonical_url = page.permalink,
             rss,
-            favicon
+            favicon,
+            insertCdn = []
         } = head;
 
         const noIndex = helper.is_archive() || helper.is_category() || helper.is_tag();
@@ -175,6 +176,10 @@ module.exports = class extends Component {
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script> : null}
 
             {followItVerificationCode ? <meta name="follow.it-verification-code" content={followItVerificationCode} /> : null}
+
+            {insertCdn && insertCdn.map(url => (
+                <script src={url}></script>
+            ))}
         </head>;
     }
 };

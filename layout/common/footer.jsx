@@ -17,10 +17,17 @@ class Footer extends Component {
 
         let footerLogo = '';
         if (logo) {
+            const { text, url } = logo || {};
             if (logo.text) {
-                footerLogo = logo.text;
+                footerLogo = (
+                    <>
+                        <img src={url} alt={siteTitle} height="28" />
+                        &nbsp;
+                        {text}
+                    </>
+                );
             } else {
-                footerLogo = <img src={logoUrl} alt={siteTitle} height="28" />;
+                footerLogo = <img src={url} alt={siteTitle} height="28" />;
             }
         } else {
             footerLogo = siteTitle;

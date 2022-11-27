@@ -25,12 +25,28 @@ module.exports = class extends Component {
                     clipboard: ${clipboard},
                     fold: '${fold}'
                 }
-            }
+            },
         };`;
+
+
+        const busuanzi_init = `if (typeof ${config.busuanzi_site_offset} !== 'undefined' 
+            && ${config.plugins.busuanzi} == true) {
+                $(document).ready(function () {
+                    var int = setInterval(fixCount, 100);
+                    var busuanziSiteOffset = parseInt(${config.busuanzi_site_offset});
+                    function fixCount() {
+                        if ($("#busuanzi_container_site_uv").css("display") != "none" && parseInt($("#busuanzi_value_site_uv").html()) > 0) {
+                            clearInterval(int);
+                            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + busuanziSiteOffset);
+                        }
+                    }
+                });
+        }`;
 
         return <Fragment>
             <script src={cdn('jquery', '3.3.1', 'dist/jquery.min.js')}></script>
             <script src={cdn('moment', '2.22.2', 'min/moment-with-locales.min.js')}></script>
+            <script dangerouslySetInnerHTML={{ __html: busuanzi_init }}></script>
             {clipboard && <script src={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} defer></script>}
             <script dangerouslySetInnerHTML={{ __html: `moment.locale("${language}");` }}></script>
             <script dangerouslySetInnerHTML={{ __html: embeddedConfig }}></script>

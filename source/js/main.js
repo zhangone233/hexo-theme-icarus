@@ -137,3 +137,21 @@
         $('.navbar-main .catalogue').on('click', toggleToc);
     }
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
+
+// (function () {
+//     // 不蒜子 设置初始化值
+//     var config = window.IcarusThemeSettings;
+//     if (typeof config !== 'undefined'
+//         && typeof config.busuanzi_site_offset !== 'undefined' && config.busuanzi == true) {
+//         $(document).ready(function () {
+//             var int = setInterval(fixCount, 100);
+//             var busuanziSiteOffset = parseInt(config.busuanzi_site_offset);
+//             function fixCount() {
+//                 if ($("#busuanzi_container_site_uv").css("display") != "none" && parseInt($("#busuanzi_value_site_uv").html()) > 0) {
+//                     clearInterval(int);
+//                     $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + busuanziSiteOffset);
+//                 }
+//             }
+//         });
+//     }
+// })();

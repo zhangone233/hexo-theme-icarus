@@ -7,6 +7,7 @@ class Footer extends Component {
             logo,
             logoLightUrl,
             logoDarkUrl,
+            aplayer,
             siteUrl,
             siteTitle,
             siteYear,
@@ -75,6 +76,32 @@ class Footer extends Component {
                                 </p>;
                             })}
                         </div> : null}
+
+                        {!!aplayer?.enable && (
+                            <div class="sideMusic">
+                                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zhangone233/APlayer@master/dist/APlayer.min.css" />
+                                {/* <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script> */}
+                                <script src="https://cdn.jsdelivr.net/gh/zhangone233/APlayer@master/dist/APlayer.min.js"></script>
+                                <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+                                <meting-js
+                                    type="playlist" // song, playlist, album, search, artist
+                                    id={aplayer.id}
+                                    server={aplayer.server} 
+                                    fixed="true"
+                                    autoplay="false"
+                                    loop="all"
+                                    order="list"
+                                    preload="auto"
+                                    list-folded="ture"
+                                    list-max-height="400px"
+                                    lrctype="0"
+                                    storagename="__aplayer-setting"
+                                    theme="#2980b9"
+                                    volume="0.7"
+                                >
+                                </meting-js>	
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -85,7 +112,7 @@ class Footer extends Component {
 module.exports = cacheComponent(Footer, 'common.footer', props => {
     const { config, helper } = props;
     const { url_for, _p, date } = helper;
-    const { logo, title, author, footer, plugins } = config;
+    const { logo, title, author, footer, plugins, aplayer } = config;
 
     const logoLight = logo instanceof String ? logo : logo.light
     const logoDark = logo instanceof String ? logo : logo.dark
@@ -106,6 +133,7 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
         logoLightUrl: url_for(logoLight),
         logoDarkUrl: url_for(logoDark),
         siteUrl: url_for('/'),
+        aplayer,
         siteTitle: title,
         siteYear: date(new Date(), 'YYYY'),
         author,

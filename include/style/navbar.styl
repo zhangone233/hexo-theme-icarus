@@ -61,3 +61,17 @@ $navbar-item-margin-h ?= 0
 @media screen and (min-width: $desktop)
     .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
         margin-right: 0rem
+
+@media screen and (max-width: 768px)
+    .navbar-main .navbar-menu
+        flex-direction: column
+        overflow: hidden;
+
+        .navbar-start
+            overflow-x: auto;
+
+@media screen and (max-width: 401px)
+    .navbar-main .navbar-menu
+        .navbar-end
+            justify-content: space-around
+

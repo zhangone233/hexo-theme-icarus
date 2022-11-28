@@ -5,7 +5,8 @@ class Footer extends Component {
     render() {
         const {
             logo,
-            logoUrl,
+            logoLightUrl,
+            logoDarkUrl,
             siteUrl,
             siteTitle,
             siteYear,
@@ -21,13 +22,23 @@ class Footer extends Component {
             if (logo.text) {
                 footerLogo = (
                     <>
-                        <img src={url} alt={siteTitle} height="28" />
-                        &nbsp;
-                        {text}
+                        <span class='logo-img'>
+                            <img src={logoLightUrl} alt={siteTitle} height="28" />
+                            &nbsp;
+                            {text}
+                        </span>
+                        <span class='logo-img-dark'>
+                            <img src={logoDarkUrl} alt={siteTitle} height="28" />
+                            &nbsp;
+                            {text}
+                        </span>
                     </>
                 );
             } else {
-                footerLogo = <img src={url} alt={siteTitle} height="28" />;
+                footerLogo = [
+                    <img class="logo-img" src={logoLightUrl} alt={siteTitle} height="28" />,
+                    <img class="logo-img-dark" src={logoDarkUrl} alt={siteTitle} height="28" />
+                ]
             }
         } else {
             footerLogo = siteTitle;
@@ -39,6 +50,10 @@ class Footer extends Component {
                     <div class="level-start">
                         <a class="footer-logo is-block mb-2" href={siteUrl}>
                             {footerLogo}
+                            {/* {logo && logo.text ? logo.text : [
+                                <img class="logo-img" src={logoLightUrl} alt={siteTitle} height="28" />,
+                                <img class="logo-img-dark" src={logoDarkUrl} alt={siteTitle} height="28" />
+                            ]} */}
                         </a>
                         <p class="is-size-7">
                             <span dangerouslySetInnerHTML={{ __html: `&copy; ${siteYear} ${author || siteTitle}` }}></span>
@@ -72,6 +87,9 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
     const { url_for, _p, date } = helper;
     const { logo, title, author, footer, plugins } = config;
 
+    const logoLight = logo instanceof String ? logo : logo.light
+    const logoDark = logo instanceof String ? logo : logo.dark
+
     const links = {};
     if (footer && footer.links) {
         Object.keys(footer.links).forEach(name => {
@@ -85,7 +103,8 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
 
     return {
         logo,
-        logoUrl: url_for(logo),
+        logoLightUrl: url_for(logoLight),
+        logoDarkUrl: url_for(logoDark),
         siteUrl: url_for('/'),
         siteTitle: title,
         siteYear: date(new Date(), 'YYYY'),

@@ -47,7 +47,8 @@ module.exports = class extends Component {
             canonical_url = page.permalink,
             rss,
             favicon,
-            insertCdn = []
+            insertCdn = [],
+            insertDeferCdn = [],
         } = head;
 
         const noIndex = helper.is_archive() || helper.is_category() || helper.is_tag();
@@ -179,6 +180,9 @@ module.exports = class extends Component {
 
             {insertCdn && insertCdn.map(url => (
                 <script src={url}></script>
+            ))}
+            {insertDeferCdn && insertDeferCdn.map(url => (
+                <script src={url} defer></script>
             ))}
         </head>;
     }

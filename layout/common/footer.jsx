@@ -14,7 +14,8 @@ class Footer extends Component {
             author,
             links,
             showVisitorCounter,
-            visitorCounterTitle
+            visitorCounterTitle,
+            ICP,
         } = this.props;
 
         let footerLogo = '';
@@ -63,6 +64,7 @@ class Footer extends Component {
                             {showVisitorCounter ? <br /> : null}
                             {showVisitorCounter ? <span id="busuanzi_container_site_uv"
                                 dangerouslySetInnerHTML={{ __html: visitorCounterTitle }}></span> : null}
+                            {ICP ? <span>&nbsp;&nbsp;<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{ICP}</a></span> : null}
                         </p>
                     </div>
                     <div class="level-end">
@@ -112,7 +114,7 @@ class Footer extends Component {
 module.exports = cacheComponent(Footer, 'common.footer', props => {
     const { config, helper } = props;
     const { url_for, _p, date } = helper;
-    const { logo, title, author, footer, plugins, aplayer } = config;
+    const { logo, title, author, footer, plugins, aplayer, record_information } = config;
 
     const logoLight = logo instanceof String ? logo : logo.light
     const logoDark = logo instanceof String ? logo : logo.dark
@@ -139,6 +141,7 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
         author,
         links,
         showVisitorCounter: plugins && plugins.busuanzi === true,
-        visitorCounterTitle: _p('plugin.visitor_count', '<span id="busuanzi_value_site_uv">0</span>')
+        visitorCounterTitle: _p('plugin.visitor_count', '<span id="busuanzi_value_site_uv">0</span>'),
+        ICP: record_information?.ICP,
     };
 });
